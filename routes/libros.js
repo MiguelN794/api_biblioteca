@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const Libro = require('../models/Libro');
 
 router.get('/', async (req, res) => {
@@ -22,13 +21,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
-        const Libro = await Libro.findByIdAndUpdate(req.params.dictionary, req.body,
-{
-        new: true,
-        });
-        res.json(Libro);
+        const libro = await Libro.findByIdAndUpdate(req.params.id, req.body,
+            {
+                new: true,
+            });
+        res.json(libro);
     } catch (error) {
         res.status(500).json({ error: "Error al actualizar el Libro" });
     }
@@ -36,10 +35,10 @@ router.put('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        await Libro.findByIdAndUpdate(req.params.id);
+        await Libro.findByIdAndDelete(req.params.id);
         res.json({ message: "Libro eliminado correctamente"});
     } catch (error) {
-        res.status*(500).json({ error: "Error al eliminar el libro"})
+        res.status(500).json({ error: "Error al eliminar el libro"})
     }
 });
 
